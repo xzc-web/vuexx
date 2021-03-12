@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    父组件替换插槽的标签。但其内容由子组件来提共
+    <div id="app">
+        <cpn></cpn>
+        <cpn>
+            <!-- slot-scope="slot"  v-for="item in slot.data" -->
+            <template slot-scope="slot">
+                <span v-for="item in slot.data">{{item}}-</span>
+            </template>
+        </cpn>
+        <cpn>
+            <!-- slot-scope="slot"   {{slot.data.join('-')}} -->
+            <template slot-scope="slot">
+                <span>{{slot.data.join('-')}}</span>
+            </template></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <!-- :data="movie" -->
+            <slot :data="movie">
+                <span v-for="item in movie">{{item}}</span>
+            </slot>
+        </div>
+
+
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+
+            },
+            components: {
+                cpn: {
+                    template: '#cpn',
+                    data() {
+                        return {
+                            movie: ['1', '2', '3', '4', '5'],
+                        }
+                    },
+                    created() {
+                        this.movie.join('-')
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
